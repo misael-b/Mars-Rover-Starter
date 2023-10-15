@@ -12,14 +12,17 @@ describe("Rover class", function () {
   let rover = new Rover(98382);
   let response = rover.receiveMessage(message);
 
-
   // 7 tests here!
   it("constructor sets position and default values for mode and generatorWatts", function () {
+    let rover = new Rover(98382)
     expect(rover.position).toEqual(98382);
     expect(rover.generatorWatts).toEqual(110);
   });
 
   it("response returned by receiveMessage contains the name of the message", function () {
+    let message = new Message('Test message with two commands', commands);
+    let rover = new Rover(98382);
+    let response = rover.receiveMessage(message);
     expect(response.message).toEqual(message.name);
 
   });
@@ -33,9 +36,15 @@ describe("Rover class", function () {
     expect(response.results[1].roverStatus.generatorWatts).toEqual(110);
     expect(response.results[1].roverStatus.position).toEqual(98382);
     expect(response.results[1].roverStatus.mode).toEqual('LOW_POWER');
+    totalLengthOfObject = 0
+    for (item in response.results[1].roverStatus) {
+      totalLengthOfObject +=1
+    }
+    expect(totalLengthOfObject).toBe(3)
   })
 
   it("responds correctly to the mode change command", function () {
+    // let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
     expect(response.results[0].completed).toEqual(true);
     
 
