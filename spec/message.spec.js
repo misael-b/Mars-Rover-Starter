@@ -17,7 +17,11 @@ describe("Message class", function() {
     });
 
     it("contains a commands array passed into the constructor as the 2nd argument", function () {
-        expect(message.commands).toEqual([{ commandType: 'MODE_CHANGE', value: 'LOW_POWER' }, { commandType: 'STATUS_CHECK'} ])
+        let commandsArray = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')];
+        let message = new Message('Test message with two commands', commandsArray);
+        expect(function () { new Message('hello'); }).toThrow(new Error('Commands are required.'));
+        expect(Array.isArray(commandsArray)).toEqual(true)
+        expect(message.commands).toEqual(commandsArray)
     });
 
 
